@@ -1,0 +1,51 @@
+WHITESPACE = _ { " " | "\t" | "\n" }
+COMMENT = _{ "//" ~ ANY*}
+
+Block = { "{" ~ Statement* ~ "}" }
+Statement = {
+    ( Block |
+    FunctionDefinition |
+    VariableDeclaration |
+    Assignment |
+    If |
+    Expression |
+    Switch |
+    ForLoop |
+    BreakContinue )
+}
+FunctionDefinition = {
+    "function " ~ Identifier ~ "(" ~ TypedIdentifierList? ~ ")" ~
+    ( "->" ~ TypedIdentifierList )? ~ Block 
+}
+VariableDeclaration = { 
+    "let" ~ TypedIdentifierList ~ ( ":=" ~ Expression )? 
+}
+Expression = { FunctionCall | Identifier | Literal }
+Assignment = { IdentifierList ~ ":=" ~ Expression }
+If = { "if" ~ Expression ~ Block }
+Switch = { "switch" ~ Expression ~ ( Case+ ~ Default? | Default ) }
+Case = { "case" ~ Literal ~ Block }
+Default = { "default" ~ Block }
+ForLoop = { "for" ~ Block ~ Expression ~ Block ~ Block }
+BreakContinue = { "break" | "continue" }
+FunctionCall = { Identifier ~ "(" ~ ( Expression ~ ( "," ~ Expression )* )? ~ ")" }
+
+
+
+TypeName = { Identifier | BuiltinTypeName }
+TypedIdentifierList = { Identifier ~ ":" ~ TypeName ~ ( "," ~ Identifier ~ ":" ~ TypeName )* }
+BuiltinTypeName = { "bool" | ( "u" | "s" ) ~ ( "8" | "32" | "64" | "128" | "256" ) }
+
+Identifier = { !Digit ~ (Alpha | Digit)+ }
+IdentifierList = { Identifier ~ ( "," ~ Identifier)* }
+
+Literal = { ( NumberLiteral | TrueLiteral | FalseLiteral ) ~  ( ":" ~ TypeName )? }
+NumberLiteral = { DecimalNumber | HexNumber }
+TrueLiteral = { "true" }
+FalseLiteral = { "false" }
+
+DecimalNumber = { (ASCII_DIGIT)+ }
+HexNumber = { "0x" ~ (ASCII_HEX_DIGIT)+ }
+
+Digit = { ASCII_DIGIT }
+Alpha = { ASCII_ALPHA | "_" }

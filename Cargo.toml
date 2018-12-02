@@ -1,0 +1,13 @@
+[package]
+name = "solparse-rs"
+version = "0.1.0"
+authors = ["Erik Kundt <bitshift@posteo.org>"]
+
+[dependencies.bnf]
+version = "0.2.2"
+
+[dependencies.pest]
+version = "^2.0.2"
+
+[dependencies.pest_derive]
+version = "2.0.1"
