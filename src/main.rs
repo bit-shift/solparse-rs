@@ -12,7 +12,7 @@ use pest::Parser;
 struct YulParser;
 
 fn main() {
-    let input = "{
+    let yul = "{
         function f() {
 
         }
@@ -41,6 +41,9 @@ fn main() {
         }
         a := 5
     }";
-    let result = YulParser::parse(Rule::Block, input).unwrap_or_else(|e| panic!("{}", e));
+    let sol = "contract C { 
+        u256 a;
+    }";
+    let result = YulParser::parse(Rule::Block, yul).unwrap_or_else(|e| panic!("{}", e));
     println!("{:?}", result);
 }
