@@ -9,7 +9,9 @@ jobs:
 
       - run:
           name: Build executable
-          command: cargo build
+          command: |
+            echo $GITTER_TOKEN 
+            cargo build
 
       - run:
           name: Failure notice
