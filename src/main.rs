@@ -45,5 +45,5 @@ fn main() {
         u256 a;
     }";
     let result = YulParser::parse(Rule::Block, yul).unwrap_or_else(|e| panic!("{}", e));
-    println!("{:?}", result);
+    println!("{:?}", res);
 }
