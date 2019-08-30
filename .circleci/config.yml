@@ -1,0 +1,28 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/rust
+
+    steps:
+      - checkout
+
+      - run:
+          name: Build executable
+          command: cargo build
+
+      - run:
+          name: Failure notice
+          command: |
+            echo "----------------------"
+            echo "Build failed."
+            echo "----------------------"
+          when: on_fail
+
+      - run:
+          name: Success notice
+          command: |
+            echo "----------------------"
+            echo "Build succeeded."
+            echo "----------------------"
+          when: on_success
