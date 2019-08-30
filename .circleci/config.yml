@@ -14,15 +14,11 @@ jobs:
       - run:
           name: Failure notice
           command: |
-            echo "----------------------"
-            echo "Build failed."
-            echo "----------------------"
+            curl -X POST -i -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $GITTER_TOKEN" "https://api.gitter.im/v1/rooms/5d68f539d73408ce4fc9a0fd/chatMessages" -d '{"text":"Building solparse-rs failed."}' 
           when: on_fail
 
       - run:
           name: Success notice
           command: |
-            echo "----------------------"
-            echo "Build succeeded."
-            echo "----------------------"
+            curl -X POST -i -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $GITTER_TOKEN" "https://api.gitter.im/v1/rooms/5d68f539d73408ce4fc9a0fd/chatMessages" -d '{"text":"Building solparse-rs succeeded."}' 
           when: on_success
