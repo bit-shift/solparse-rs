@@ -13,16 +13,20 @@ jobs:
 
       - run:
           name: Failure notice
-          command: |
-            echo "----------------------"
-            echo "Build failed."
-            echo "----------------------"
+          command: >-
+            curl -X POST -i
+            -i -H "Content-Type: application/json"
+            -H "Accept: application/json"
+            -H "Authorization: Bearer $GITTER_API_TOKEN" "https://api.gitter.im/v1/rooms/$GITTER_NOTIFY_ROOM_ID/chatMessages"
+            -d '{"text":" ❌ Nightly job **'$CIRCLE_JOB'** failed. Please check '$CIRCLE_BUILD_URL' for details."}'
           when: on_fail
 
       - run:
           name: Success notice
-          command: |
-            echo "----------------------"
-            echo "Build succeeded."
-            echo "----------------------"
+          command: >-
+            curl -X POST -i
+            -H "Content-Type: application/json"
+            -H "Accept: application/json"
+            -H "Authorization: Bearer $GITTER_API_TOKEN" "https://api.gitter.im/v1/rooms/$GITTER_NOTIFY_ROOM_ID/chatMessages"
+            -d '{"text":" ✅ Nightly job **'$CIRCLE_JOB'** succeeded. Please check '$CIRCLE_BUILD_URL' for details."}'
           when: on_success
